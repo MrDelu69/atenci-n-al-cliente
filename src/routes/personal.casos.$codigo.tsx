@@ -28,7 +28,6 @@ import {
   STATUS_LABEL,
   STATUSES,
   TOPICS,
-  TYPE_LABEL,
   type CaseEvent,
   type CaseStatus,
   type CaseType,
@@ -493,5 +492,3 @@ function ActivityItem({ e }: { e: CaseEvent }) {
   );
 }
 
-// Keep TYPE_LABEL referenced for future labels without lint noise.
-void TYPE_LABEL;

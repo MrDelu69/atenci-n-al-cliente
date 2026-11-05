@@ -18,6 +18,7 @@ import { Route as MiCasoIndexRouteImport } from './routes/mi-caso.index'
 import { Route as MiCasoCodigoRouteImport } from './routes/mi-caso.$codigo'
 import { Route as PersonalIndexRouteImport } from './routes/personal.index'
 import { Route as PersonalCasosIndexRouteImport } from './routes/personal.casos.index'
+import { Route as PersonalCasosCodigoRouteImport } from './routes/personal.casos.$codigo'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +65,11 @@ const PersonalCasosIndexRoute = PersonalCasosIndexRouteImport.update({
   path: '/casos/',
   getParentRoute: () => PersonalRoute,
 } as any)
+const PersonalCasosCodigoRoute = PersonalCasosCodigoRouteImport.update({
+  id: '/casos/$codigo',
+  path: '/casos/$codigo',
+  getParentRoute: () => PersonalRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/mi-caso/$codigo': typeof MiCasoCodigoRoute
   '/mi-caso/': typeof MiCasoIndexRoute
   '/personal/': typeof PersonalIndexRoute
+  '/personal/casos/$codigo': typeof PersonalCasosCodigoRoute
   '/personal/casos/': typeof PersonalCasosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -84,6 +91,7 @@ export interface FileRoutesByTo {
   '/mi-caso/$codigo': typeof MiCasoCodigoRoute
   '/mi-caso': typeof MiCasoIndexRoute
   '/personal': typeof PersonalIndexRoute
+  '/personal/casos/$codigo': typeof PersonalCasosCodigoRoute
   '/personal/casos': typeof PersonalCasosIndexRoute
 }
 export interface FileRoutesById {
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   '/mi-caso/$codigo': typeof MiCasoCodigoRoute
   '/mi-caso/': typeof MiCasoIndexRoute
   '/personal/': typeof PersonalIndexRoute
+  '/personal/casos/$codigo': typeof PersonalCasosCodigoRoute
   '/personal/casos/': typeof PersonalCasosIndexRoute
 }
 export interface FileRouteTypes {
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/mi-caso/$codigo'
     | '/mi-caso/'
     | '/personal/'
+    | '/personal/casos/$codigo'
     | '/personal/casos/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/mi-caso/$codigo'
     | '/mi-caso'
     | '/personal'
+    | '/personal/casos/$codigo'
     | '/personal/casos'
   id:
     | '__root__'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/mi-caso/$codigo'
     | '/mi-caso/'
     | '/personal/'
+    | '/personal/casos/$codigo'
     | '/personal/casos/'
   fileRoutesById: FileRoutesById
 }
@@ -208,16 +220,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PersonalCasosIndexRouteImport
       parentRoute: typeof PersonalRoute
     }
+    '/personal/casos/$codigo': {
+      id: '/personal/casos/$codigo'
+      path: '/casos/$codigo'
+      fullPath: '/personal/casos/$codigo'
+      preLoaderRoute: typeof PersonalCasosCodigoRouteImport
+      parentRoute: typeof PersonalRoute
+    }
   }
 }
 
 interface PersonalRouteChildren {
   PersonalIndexRoute: typeof PersonalIndexRoute
+  PersonalCasosCodigoRoute: typeof PersonalCasosCodigoRoute
   PersonalCasosIndexRoute: typeof PersonalCasosIndexRoute
 }
 
 const PersonalRouteChildren: PersonalRouteChildren = {
   PersonalIndexRoute: PersonalIndexRoute,
+  PersonalCasosCodigoRoute: PersonalCasosCodigoRoute,
   PersonalCasosIndexRoute: PersonalCasosIndexRoute,
 }
 
