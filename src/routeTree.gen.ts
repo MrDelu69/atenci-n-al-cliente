@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConfirmacionRouteImport } from './routes/confirmacion'
+import { Route as EnviarRouteImport } from './routes/enviar'
 import { Route as PreguntasRouteImport } from './routes/preguntas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmacionRoute = ConfirmacionRouteImport.update({
+  id: '/confirmacion',
+  path: '/confirmacion',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnviarRoute = EnviarRouteImport.update({
+  id: '/enviar',
+  path: '/enviar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PreguntasRoute = PreguntasRouteImport.update({
@@ -25,27 +37,35 @@ const PreguntasRoute = PreguntasRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/confirmacion': typeof ConfirmacionRoute
+  '/enviar': typeof EnviarRoute
   '/preguntas': typeof PreguntasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/confirmacion': typeof ConfirmacionRoute
+  '/enviar': typeof EnviarRoute
   '/preguntas': typeof PreguntasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/confirmacion': typeof ConfirmacionRoute
+  '/enviar': typeof EnviarRoute
   '/preguntas': typeof PreguntasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/preguntas'
+  fullPaths: '/' | '/confirmacion' | '/enviar' | '/preguntas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/preguntas'
-  id: '__root__' | '/' | '/preguntas'
+  to: '/' | '/confirmacion' | '/enviar' | '/preguntas'
+  id: '__root__' | '/' | '/confirmacion' | '/enviar' | '/preguntas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConfirmacionRoute: typeof ConfirmacionRoute
+  EnviarRoute: typeof EnviarRoute
   PreguntasRoute: typeof PreguntasRoute
 }
 
@@ -56,6 +76,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirmacion': {
+      id: '/confirmacion'
+      path: '/confirmacion'
+      fullPath: '/confirmacion'
+      preLoaderRoute: typeof ConfirmacionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enviar': {
+      id: '/enviar'
+      path: '/enviar'
+      fullPath: '/enviar'
+      preLoaderRoute: typeof EnviarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/preguntas': {
@@ -70,6 +104,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConfirmacionRoute: ConfirmacionRoute,
+  EnviarRoute: EnviarRoute,
   PreguntasRoute: PreguntasRoute,
 }
 export const routeTree = rootRouteImport
