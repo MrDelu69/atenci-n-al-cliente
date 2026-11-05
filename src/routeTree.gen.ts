@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConfirmacionRouteImport } from './routes/confirmacion'
 import { Route as EnviarRouteImport } from './routes/enviar'
+import { Route as PersonalRouteImport } from './routes/personal'
 import { Route as PreguntasRouteImport } from './routes/preguntas'
 import { Route as MiCasoIndexRouteImport } from './routes/mi-caso.index'
 import { Route as MiCasoCodigoRouteImport } from './routes/mi-caso.$codigo'
+import { Route as PersonalIndexRouteImport } from './routes/personal.index'
+import { Route as PersonalCasosIndexRouteImport } from './routes/personal.casos.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +32,11 @@ const ConfirmacionRoute = ConfirmacionRouteImport.update({
 const EnviarRoute = EnviarRouteImport.update({
   id: '/enviar',
   path: '/enviar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersonalRoute = PersonalRouteImport.update({
+  id: '/personal',
+  path: '/personal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PreguntasRoute = PreguntasRouteImport.update({
@@ -46,14 +54,27 @@ const MiCasoCodigoRoute = MiCasoCodigoRouteImport.update({
   path: '/mi-caso/$codigo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PersonalIndexRoute = PersonalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PersonalRoute,
+} as any)
+const PersonalCasosIndexRoute = PersonalCasosIndexRouteImport.update({
+  id: '/casos/',
+  path: '/casos/',
+  getParentRoute: () => PersonalRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/confirmacion': typeof ConfirmacionRoute
   '/enviar': typeof EnviarRoute
+  '/personal': typeof PersonalRouteWithChildren
   '/preguntas': typeof PreguntasRoute
   '/mi-caso/$codigo': typeof MiCasoCodigoRoute
   '/mi-caso/': typeof MiCasoIndexRoute
+  '/personal/': typeof PersonalIndexRoute
+  '/personal/casos/': typeof PersonalCasosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,15 +83,20 @@ export interface FileRoutesByTo {
   '/preguntas': typeof PreguntasRoute
   '/mi-caso/$codigo': typeof MiCasoCodigoRoute
   '/mi-caso': typeof MiCasoIndexRoute
+  '/personal': typeof PersonalIndexRoute
+  '/personal/casos': typeof PersonalCasosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/confirmacion': typeof ConfirmacionRoute
   '/enviar': typeof EnviarRoute
+  '/personal': typeof PersonalRouteWithChildren
   '/preguntas': typeof PreguntasRoute
   '/mi-caso/$codigo': typeof MiCasoCodigoRoute
   '/mi-caso/': typeof MiCasoIndexRoute
+  '/personal/': typeof PersonalIndexRoute
+  '/personal/casos/': typeof PersonalCasosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -78,9 +104,12 @@ export interface FileRouteTypes {
     | '/'
     | '/confirmacion'
     | '/enviar'
+    | '/personal'
     | '/preguntas'
     | '/mi-caso/$codigo'
     | '/mi-caso/'
+    | '/personal/'
+    | '/personal/casos/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,20 +118,26 @@ export interface FileRouteTypes {
     | '/preguntas'
     | '/mi-caso/$codigo'
     | '/mi-caso'
+    | '/personal'
+    | '/personal/casos'
   id:
     | '__root__'
     | '/'
     | '/confirmacion'
     | '/enviar'
+    | '/personal'
     | '/preguntas'
     | '/mi-caso/$codigo'
     | '/mi-caso/'
+    | '/personal/'
+    | '/personal/casos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConfirmacionRoute: typeof ConfirmacionRoute
   EnviarRoute: typeof EnviarRoute
+  PersonalRoute: typeof PersonalRouteWithChildren
   PreguntasRoute: typeof PreguntasRoute
   MiCasoCodigoRoute: typeof MiCasoCodigoRoute
   MiCasoIndexRoute: typeof MiCasoIndexRoute
@@ -131,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnviarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/personal': {
+      id: '/personal'
+      path: '/personal'
+      fullPath: '/personal'
+      preLoaderRoute: typeof PersonalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/preguntas': {
       id: '/preguntas'
       path: '/preguntas'
@@ -152,13 +194,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MiCasoCodigoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/personal/': {
+      id: '/personal/'
+      path: '/'
+      fullPath: '/personal/'
+      preLoaderRoute: typeof PersonalIndexRouteImport
+      parentRoute: typeof PersonalRoute
+    }
+    '/personal/casos/': {
+      id: '/personal/casos/'
+      path: '/casos'
+      fullPath: '/personal/casos/'
+      preLoaderRoute: typeof PersonalCasosIndexRouteImport
+      parentRoute: typeof PersonalRoute
+    }
   }
 }
+
+interface PersonalRouteChildren {
+  PersonalIndexRoute: typeof PersonalIndexRoute
+  PersonalCasosIndexRoute: typeof PersonalCasosIndexRoute
+}
+
+const PersonalRouteChildren: PersonalRouteChildren = {
+  PersonalIndexRoute: PersonalIndexRoute,
+  PersonalCasosIndexRoute: PersonalCasosIndexRoute,
+}
+
+const PersonalRouteWithChildren = PersonalRoute._addFileChildren(
+  PersonalRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConfirmacionRoute: ConfirmacionRoute,
   EnviarRoute: EnviarRoute,
+  PersonalRoute: PersonalRouteWithChildren,
   PreguntasRoute: PreguntasRoute,
   MiCasoCodigoRoute: MiCasoCodigoRoute,
   MiCasoIndexRoute: MiCasoIndexRoute,
