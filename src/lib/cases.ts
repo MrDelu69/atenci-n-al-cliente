@@ -16,9 +16,9 @@ export interface CaseEvent {
   id: string;
   at: string; // ISO date
   kind: EventKind;
-  status?: CaseStatus;
-  text?: string;
-  author?: string;
+  status?: CaseStatus | undefined;
+  text?: string | undefined;
+  author?: string | undefined;
   /** Only events marked visible are ever shown to the customer. */
   visibleToClient: boolean;
 }
@@ -195,7 +195,7 @@ function touch(c: SupportCase, at: string, event: CaseEvent): SupportCase {
 export function changeStatus(
   c: SupportCase,
   to: CaseStatus,
-  opts: { reason?: string; finalAnswer?: string; author?: string } = {},
+  opts: { reason?: string | undefined; finalAnswer?: string | undefined; author?: string | undefined } = {},
   now: Date = new Date(),
 ): Result {
   if (to === c.status) return { ok: false, error: "El caso ya tiene ese estado." };

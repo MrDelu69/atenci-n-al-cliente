@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button";
 import { getLastCreated, grantAccess, useDemoState } from "@/lib/demo-store";
 
 export const Route = createFileRoute("/confirmacion")({
-  validateSearch: (s: Record<string, unknown>): { codigo?: string } => ({
-    codigo: typeof s.codigo === "string" ? s.codigo : undefined,
+  validateSearch: (s: Record<string, unknown>): { codigo?: string | undefined } => ({
+    codigo: typeof s["codigo"] === "string" ? s["codigo"] : undefined,
   }),
   head: () => ({
     meta: [

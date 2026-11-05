@@ -14,12 +14,12 @@ import {
 import { getCases, saveCase, setLastCreated } from "@/lib/demo-store";
 import { cn } from "@/lib/utils";
 
-type Search = { tipo?: CaseType; tema?: string };
+type Search = { tipo?: CaseType | undefined; tema?: string | undefined };
 
 export const Route = createFileRoute("/enviar")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    tipo: s.tipo === "reclamo" ? "reclamo" : s.tipo === "consulta" ? "consulta" : undefined,
-    tema: typeof s.tema === "string" ? s.tema.slice(0, 80) : undefined,
+    tipo: s["tipo"] === "reclamo" ? "reclamo" : s["tipo"] === "consulta" ? "consulta" : undefined,
+    tema: typeof s["tema"] === "string" ? s["tema"].slice(0, 80) : undefined,
   }),
   head: () => ({
     meta: [

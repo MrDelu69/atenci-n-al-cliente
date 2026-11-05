@@ -8,14 +8,19 @@ import { AGENTS, STATUS_LABEL, STATUSES, type CaseStatus, type CaseType } from "
 import { useDemoState } from "@/lib/demo-store";
 import { formatDateTime } from "@/lib/format";
 
-type Search = { q?: string; estado?: CaseStatus; tipo?: CaseType; responsable?: string };
+type Search = {
+  q?: string | undefined;
+  estado?: CaseStatus | undefined;
+  tipo?: CaseType | undefined;
+  responsable?: string | undefined;
+};
 
 export const Route = createFileRoute("/personal/casos/")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    q: typeof s.q === "string" && s.q ? s.q : undefined,
-    estado: STATUSES.includes(s.estado as CaseStatus) ? (s.estado as CaseStatus) : undefined,
-    tipo: s.tipo === "consulta" || s.tipo === "reclamo" ? s.tipo : undefined,
-    responsable: typeof s.responsable === "string" && s.responsable ? s.responsable : undefined,
+    q: typeof s["q"] === "string" && s["q"] ? s["q"] : undefined,
+    estado: STATUSES.includes(s["estado"] as CaseStatus) ? (s["estado"] as CaseStatus) : undefined,
+    tipo: s["tipo"] === "consulta" || s["tipo"] === "reclamo" ? s["tipo"] : undefined,
+    responsable: typeof s["responsable"] === "string" && s["responsable"] ? s["responsable"] : undefined,
   }),
   head: () => ({
     meta: [
