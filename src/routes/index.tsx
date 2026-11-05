@@ -97,7 +97,7 @@ function Index() {
             <li key={o.title} className="fade-up" style={{ animationDelay: `${i * 60}ms` }}>
               <Link
                 to={o.to}
-                search={o.search}
+                search={o.search ?? {}}
                 className="group flex h-full flex-col gap-4 rounded-2xl border bg-card p-6 shadow-soft transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lift sm:p-7"
               >
                 <span

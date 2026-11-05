@@ -26,7 +26,7 @@ const NAV = [
   { to: "/", label: "Vista del cliente", icon: MonitorSmartphone, exact: true },
 ] as const;
 
-function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
+function NavLinks({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   return (
     <nav aria-label="Panel del personal" className="flex flex-col gap-1">
       {NAV.map((n) => (
@@ -45,7 +45,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
+function SidebarBody({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   return (
     <div className="flex h-full flex-col gap-8 p-5">
       <div className="flex items-center gap-3">

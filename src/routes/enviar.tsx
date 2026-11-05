@@ -57,7 +57,7 @@ function SendPage() {
   );
 }
 
-function CaseForm({ initialType, topic }: { initialType: CaseType; topic?: string }) {
+function CaseForm({ initialType, topic }: { initialType: CaseType; topic?: string | undefined }) {
   const navigate = useNavigate();
   const [values, setValues] = useState<CaseFormValues>({
     name: "",
@@ -280,7 +280,7 @@ type FieldProps = {
   id: string;
   className: string;
   "aria-invalid": boolean;
-  "aria-describedby"?: string;
+  "aria-describedby"?: string | undefined;
 };
 
 function Field({
@@ -290,8 +290,8 @@ function Field({
   children,
 }: {
   label: string;
-  error?: string;
-  hint?: string;
+  error?: string | undefined;
+  hint?: string | undefined;
   children: (p: FieldProps) => ReactNode;
 }) {
   const id = useId();
